@@ -66,39 +66,45 @@ Here’s a table for the imports listed in my target, with exact SLOC (Source Li
 | Files in scope         | SLOC |
 |------------------------|------|
 | Contracts: 1           |      |
-| `NonfungiblePositionManager.sol` | `XXX`| 
+| `NonfungiblePositionManager.sol` | `400`| 
 |                        |      |
 | Imports: 13            |      |
 | `IUniswapV3Pool.sol`                               |   `XXX`   |
 | `FixedPoint128.sol`                                |   `XXX`   |
 | `FullMath.sol`                                     |   `XXX`   |
-| `INonfungiblePositionManager.sol`                  |   `XXX`   |
-| `INonfungibleTokenPositionDescriptor.sol`          |   `XXX`   |
-| `PositionKey.sol`                                  |   `XXX`   |
-| `PoolAddress.sol`                                  |   `XXX`   |
-| `LiquidityManagement.sol`                          |   `XXX`   |
-| `PeripheryImmutableState.sol`                      |    `XXX`  |
-| `Multicall.sol`                                    |    `XXX`  |
-| `ERC721Permit.sol`                                 |    `XXX`  |
-| `PeripheryValidation.sol`                          |    `XXX`  |
-| `SelfPermit.sol`                                   |    `XXX`  |
-| `PoolInitializer.sol`                              |    `XXX`  |
+| `INonfungiblePositionManager.sol`                  |   `179`   |
+| `INonfungibleTokenPositionDescriptor.sol`          |   `17`   |
+| `PositionKey.sol`                                  |   `13`   |
+| `PoolAddress.sol`                                  |   `48`   |
+| `LiquidityManagement.sol`                          |   `90`   |
+| `PeripheryImmutableState.sol`                      |    `18`  |
+| `Multicall.sol`                                    |    `28`  |
+| `ERC721Permit.sol`                                 |    `86`  |
+| `PeripheryValidation.sol`                          |    `11`  |
+| `SelfPermit.sol`                                   |    `63`  |
+| `PoolInitializer.sol`                              |    `32`  |
 
 ### <h3 id="overview"> Dependencies Overview <h3>
+
+#### Core Imports
 
 1. **@uniswap/v3-core/contracts/interfaces/IUniswapV3Pool.sol**: Interface for Uniswap V3 pools, allowing interaction with specific pools for adding/removing liquidity, swapping, and querying pool states.
 
 2. **@uniswap/v3-core/contracts/libraries/FixedPoint128.sol**: This library handles fixed-point arithmetic, particularly with a scale factor of \(2^{128}\). It is helpful for handling precise calculations needed in Uniswap V3's liquidity and fee computations.
 
-3. **@uniswap/v3-core/contracts/libraries/FullMath.sol**: FullMath is a library for handling advanced mathematical operations in Solidity, such as multiplication and division with overflow protection. It's crucial in Uniswap for accurate calculations without risking overflow errors.
+3. **@uniswap/v3-core/contracts/libraries/FullMath.sol**: FullMath is a library for handling advanced  (512-bit) mathematical operations in Solidity, such as multiplication and division with overflow protection. It's crucial in Uniswap for accurate calculations without risking overflow errors.
+
+#### Periphery Imports
 
 4. **./interfaces/INonfungiblePositionManager.sol**: Interface for the Nonfungible Position Manager, which manages the NFT representation of Uniswap V3 liquidity positions. It allows minting and burning these NFTs, as well as managing liquidity.
 
-5. **./interfaces/INonfungibleTokenPositionDescriptor.sol**: This interface likely handles the metadata for NFTs representing Uniswap V3 positions, allowing visualization and additional information about each position in the Uniswap protocol.
+5. **./interfaces/INonfungibleTokenPositionDescriptor.sol**: This interface describes metadata for Uniswap V3 position tokens (NFTs). It allows the contract to fetch or generate information about each position, such as the token pair, fee tier, liquidity amount, and tick range. This is crucial if the contract needs to provide users with position information in a readable format, like a token URI for the NFT.
 
 6. **./libraries/PositionKey.sol**: This library is used to compute unique keys for liquidity positions based on the pool, owner, and position range. It’s essential for managing and tracking liquidity positions accurately.
 
 7. **./libraries/PoolAddress.sol**: PoolAddress is likely a helper library to calculate deterministic addresses for Uniswap V3 pools based on the tokens and fee tier. This enables identifying or interacting with specific pools based on their parameters.
+
+#### Contract Functionality and Utility Imports
 
 8. **./base/LiquidityManagement.sol**: Contains core liquidity management logic. It likely includes functions to add or remove liquidity from pools, interact with tokens, and potentially handle fees.
 
